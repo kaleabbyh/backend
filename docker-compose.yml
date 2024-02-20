@@ -1,21 +1,25 @@
 version: "3.8"
 services:
   app:
-    container_name: docker-node-mongo
+    container_name: test-node-api
+    image: test-node-img
     restart: always
     build: .
     ports:
-      - "5000:5000"
-    depends_on:
-      - mongo
-
-  mongo:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "27017:27017"
+      - "${PORT}:${PORT}"
     volumes:
-      - db:/data/db
+      - .:/app
+    depends_on:
+      - mongodb-db
+  mongodb-db:
+    container_name: test-mongodb
+    image: mongo
+    restart: always
+    ports:
+      - "${MGDB_PORT}:${MGDB_PORT}"
+    volumes:
+      - mongodb_data:/data/db
+    command: mongod --quiet --logpath /dev/null 
 
 volumes:
-  db:
+  mongodb_data:

@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 
 app.use("/api", require("../routes/songRoute"));
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   connectDB();
   console.log(`app running on port ${PORT}`);
